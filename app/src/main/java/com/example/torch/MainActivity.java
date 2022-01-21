@@ -15,35 +15,27 @@ import android.widget.ToggleButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    ToggleButton   toggleButton;
+    ToggleButton toggleButton;
     ImageView imageView;
     Vibrator vibe;
-    /**
-     * Object for camera service
-     */
     private CameraManager objCameraManager;
-    /**
-     * id of current camera
-     */
-    private String mCameraId;
-    /**
-     * Object of medial player to play sound while flash on/off
 
-     * for getting torch mode
-     */
+    private String mCameraId;
+
     private Boolean isTorchOn;
+
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toggleButton = findViewById ( R.id.tb2 );
-        toggleButton.setOnClickListener ( this );
+        toggleButton = findViewById(R.id.tb2);
+        toggleButton.setOnClickListener(this);
         isTorchOn = false;
-        imageView= findViewById ( R.id.imageView );
-        imageView.setImageDrawable (getResources ().getDrawable ( R.drawable.light_off ));
-        vibe = (Vibrator) getSystemService ( Context.VIBRATOR_SERVICE );
+        imageView = findViewById(R.id.imageView);
+        imageView.setImageDrawable(getResources().getDrawable(R.drawable.light_off));
+        vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 /*
   Check if device contains flashlight
 
@@ -77,8 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 alert.show();
 
  */
-
-
         objCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             mCameraId = objCameraManager.getCameraIdList()[0];
@@ -93,23 +83,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         try {
             if (toggleButton.isChecked()) {
-               //
-                imageView.setImageDrawable (getResources ().getDrawable ( R.drawable.light_on ));
+                //
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.light_on));
                 turnOnLight();
                 vibe.vibrate(100);
-                Toast.makeText ( this, "The torch is turned on", Toast.LENGTH_SHORT ).show ();
+                Toast.makeText(this, "The torch is turned on", Toast.LENGTH_SHORT).show();
                 isTorchOn = true;
             } else {
-                imageView.setImageDrawable (getResources ().getDrawable ( R.drawable.light_off ));
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.light_off));
                 vibe.vibrate(100);
                 turnOffLight();
-                Toast.makeText ( this, "The torch is turned off", Toast.LENGTH_SHORT ).show ();
-                  isTorchOn = false;
+                Toast.makeText(this, "The torch is turned off", Toast.LENGTH_SHORT).show();
+                isTorchOn = false;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public void turnOnLight() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -131,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }/*
+    }
     @Override
     protected void onStop() {
         super.onStop();
@@ -154,5 +145,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-  */
+
 }
